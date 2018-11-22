@@ -1,5 +1,10 @@
 import * as React from "react";
 import Counter from "./counter";
+import { CounterModel } from "../models/counterModel";
+
+export interface CountersState {
+  counters: CounterModel[];
+}
 
 class Counters extends React.Component {
   state = {
@@ -33,12 +38,18 @@ class Counters extends React.Component {
         {this.state.counters.map(counter => (
           <Counter
             key={counter.id}
-            value={counter.value}
-            incrementAmount={counter.incrementAmount}
+            counter={counter}
+            onDelete={this.handleDelete}
           />
         ))}
       </div>
     );
+  }
+
+  handleDelete = (counterId: number) => {
+    this.setState({
+      counters: this.state.counters.filter(c => c.id !== counterId)
+    });
   }
 }
 

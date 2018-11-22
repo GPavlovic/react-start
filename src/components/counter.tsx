@@ -1,8 +1,9 @@
 import * as React from "react";
+import { CounterModel } from "../models/counterModel";
 
 export interface CounterProps {
-  value: number;
-  incrementAmount: number;
+  counter: CounterModel;
+  onDelete(counterId: number): void;
 }
 
 export interface CounterState {
@@ -27,8 +28,8 @@ class Counter extends React.Component<CounterProps, CounterState> {
     super(props);
     this.state = {
       ...initialState,
-      value: this.props.value,
-      incrementAmount: this.props.incrementAmount,
+      value: this.props.counter.value,
+      incrementAmount: this.props.counter.incrementAmount,
       tags: ["tag1", "tag2", "tag3"]
     };
   }
@@ -44,6 +45,12 @@ class Counter extends React.Component<CounterProps, CounterState> {
           className="btn btn-secondary btn-sm"
         >
           Increment
+        </button>
+        <button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          className="btn-danger btn-sm m-2"
+        >
+          Delete
         </button>
         <ul>
           {this.state.tags.map(tag => (
